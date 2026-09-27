@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DPA.SHOPPING.API/DPA.SHOPPING.API.csproj" />
+  <Project Path="DPA.SHOPPING.CORE/DPA.SHOPPING.CORE.csproj" />
+</Solution>
