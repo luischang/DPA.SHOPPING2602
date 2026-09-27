@@ -10,16 +10,20 @@ namespace DPA.SHOPPING.API.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        public CategoryController(ICategoryRepository categoryRepository
+                    , ICategoryService categoryService)
         {
             _categoryRepository = categoryRepository;
+            _categoryService = categoryService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var categories = await _categoryRepository.GetCategories();
+            //var categories = await _categoryRepository.GetCategories();
+            var categories = await _categoryService.GetCategories();
             return Ok(categories);
         }
 
