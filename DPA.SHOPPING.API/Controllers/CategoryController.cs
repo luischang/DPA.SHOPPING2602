@@ -1,4 +1,5 @@
-﻿using DPA.SHOPPING.CORE.Core.Entities;
+﻿using DPA.SHOPPING.CORE.Core.DTOs;
+using DPA.SHOPPING.CORE.Core.Entities;
 using DPA.SHOPPING.CORE.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,28 +31,28 @@ namespace DPA.SHOPPING.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategory(int id)
         {
-            var category = await _categoryRepository.GetCategoryById(id);
+            var category = await _categoryService.GetCategoryById(id);
             if (category == null)
                 return NotFound();
             return Ok(category);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromBody] Category category)
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDTO category)
         {
-            var result = await _categoryRepository.CreateCategory(category);
+            var result = await _categoryService.CreateCategory(category);
             if (!result)
                 return BadRequest("Failed to create category.");
-            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
+            return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromBody] Category category)
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryUpdateDTO category)
         {
             if(id != category.Id)
                 return BadRequest("Category ID mismatch.");
 
-            var result = await _categoryRepository.UpdateCategory(category);
+            var result = await _categoryService.UpdateCategory(category);
             if (!result)
                 return NotFound();
 
@@ -61,7 +62,8 @@ namespace DPA.SHOPPING.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var result = await _categoryRepository.DeleteCategory(id);
+            CategoryDeleteDTO deleteDTO = new CategoryDeleteDTO { Id = id };
+            var result = await _categoryService.DeleteCategory(deleteDTO);
             if (!result)
                 return NotFound();
             return NoContent();

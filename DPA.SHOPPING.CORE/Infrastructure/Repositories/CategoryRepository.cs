@@ -19,13 +19,19 @@ namespace DPA.SHOPPING.CORE.Infrastructure.Repositories
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            var categories = await _context.Category.ToListAsync();
+            var categories = await _context
+                                    .Category
+                                    .Where(c => c.IsActive == true)
+                                    .ToListAsync();
             return categories;
         }
 
         public async Task<Category> GetCategoryById(int id)
         {
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context
+                                    .Category
+                                    .Where(c => c.Id == id && c.IsActive == true)
+                                    .FirstOrDefaultAsync();
             return category;
         }
 

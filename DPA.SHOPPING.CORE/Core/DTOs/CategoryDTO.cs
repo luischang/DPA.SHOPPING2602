@@ -23,5 +23,16 @@ namespace DPA.SHOPPING.CORE.Core.DTOs
         public string Description { get; set; }        
     }
 
+    public class CategoryUpdateDTO
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class CategoryDeleteDTO
+    {
+        public int Id { get; set; }
+    }
+
 
 }
