@@ -10,13 +10,10 @@ namespace DPA.SHOPPING.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryRepository _categoryRepository;
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryRepository categoryRepository
-                    , ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService)
         {
-            _categoryRepository = categoryRepository;
             _categoryService = categoryService;
         }
 
