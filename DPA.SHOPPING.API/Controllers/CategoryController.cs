@@ -18,6 +18,8 @@ namespace DPA.SHOPPING.API.Controllers
         }
 
         [HttpGet]
+        [EndpointSummary("Get all categories")]
+        [EndpointDescription("Returns a list of all categories in the system.")]
         public async Task<IActionResult> GetCategories()
         {
             //var categories = await _categoryRepository.GetCategories();
@@ -26,6 +28,8 @@ namespace DPA.SHOPPING.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [EndpointSummary("Get category by ID")]
+
         public async Task<IActionResult> GetCategory(int id)
         {
             var category = await _categoryService.GetCategoryById(id);
@@ -35,6 +39,7 @@ namespace DPA.SHOPPING.API.Controllers
         }
 
         [HttpPost]
+        [EndpointSummary("Create a new category")]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryCreateDTO category)
         {
             var result = await _categoryService.CreateCategory(category);
@@ -44,6 +49,7 @@ namespace DPA.SHOPPING.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [EndpointSummary("Update an existing category")]
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] CategoryUpdateDTO category)
         {
             if(id != category.Id)
@@ -57,6 +63,7 @@ namespace DPA.SHOPPING.API.Controllers
         }
         
         [HttpDelete("{id}")]
+        [EndpointSummary("Delete a category")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             CategoryDeleteDTO deleteDTO = new CategoryDeleteDTO { Id = id };
