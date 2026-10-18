@@ -2,6 +2,7 @@ using DPA.SHOPPING.CORE.Core.Interfaces;
 using DPA.SHOPPING.CORE.Core.Services;
 using DPA.SHOPPING.CORE.Infrastructure.Data;
 using DPA.SHOPPING.CORE.Infrastructure.Repositories;
+using DPA.SHOPPING.CORE.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,10 @@ builder.Services.AddTransient<IFavoriteService, FavoriteService>();
 builder.Services.AddTransient<IOrdersRepository, OrdersRepository>();
 builder.Services.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
 builder.Services.AddTransient<IOrdersService, OrdersService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddSharedInfrastructure(_config);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
