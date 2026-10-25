@@ -45,5 +45,17 @@ namespace DPA.SHOPPING.CORE.Infrastructure.Repositories
             var result = await _context.SaveChangesAsync();
             return result > 0;
         }
+
+        public async Task<Orders> GetOrderByUserId(int userId)
+        {
+            var order = await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderDetail)
+                    .ThenInclude(d => d.Product)
+                        .ThenInclude(p => p.Category)
+                .Where(o => o.UserId == userId)
+                .FirstOrDefaultAsync();
+            return order;
+        }
     }
 }

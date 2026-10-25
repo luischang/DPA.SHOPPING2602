@@ -99,6 +99,43 @@ namespace DPA.SHOPPING.CORE.Core.Services
             return dto;
         }
 
+        public async Task<OrderResponseDTO> GetOrderByUserId(int userId)
+        {
+            var o = await _ordersRepository.GetOrderByUserId(userId);
+            if (o == null) return null;
+
+            var dto = new OrderResponseDTO
+            {
+                Id = o.Id,
+                CreatedAt = o.CreatedAt,
+                UserId = o.UserId,
+                Status = o.Status,
+                TotalAmount = o.TotalAmount,
+                OrderDetail = o.OrderDetail?.Select(d => new OrderDetailResponseDTO
+                {
+                    Id = d.Id,
+                    ProductId = d.ProductId,
+                    Product = d.Product == null ? null : new ProductListDTO
+                    {
+                        Id = d.Product.Id,
+                        Description = d.Product.Description,
+                        Price = d.Product.Price,
+                        Stock = d.Product.Stock,
+                        ImageUrl = d.Product.ImageUrl,
+                        Category = d.Product.Category == null ? null : new CategoryListDTO
+                        {
+                            Id = d.Product.Category.Id,
+                            Description = d.Product.Category.Description
+                        }
+                    },
+                    Quantity = d.Quantity,
+                    Price = d.Price
+                }).ToList()
+            };
+
+            return dto;
+        }
+
         public async Task<bool> CreateOrder(OrderCreateDTO orderDTO)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();

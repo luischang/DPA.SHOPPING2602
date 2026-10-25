@@ -8,5 +8,6 @@ namespace DPA.SHOPPING.CORE.Core.Interfaces
         Task<IEnumerable<Orders>> GetOrders();
         Task<Orders> GetOrderById(int id);
         Task<bool> CreateOrder(Orders order);
+        Task<Orders> GetOrderByUserId(int userId);
     }
 }
