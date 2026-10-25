@@ -38,7 +38,7 @@ builder.Services.AddOpenApi();
 
 //IA IChatClient provider selected
 IChatClient chatClient = _config["AI:Provider"] == "Gemini" ? 
-        new Google.GenAI.Client(apiKey: _config["AI:ApiKey"]).AsIChatClient(_config["AI:Gemini:Model"]) :
+        new Google.GenAI.Client(apiKey: _config["AI:Gemini:ApiKey"]).AsIChatClient(_config["AI:Gemini:Model"]) :
         new OllamaApiClient(new Uri(_config["AI:Ollama:Endpoint"]!), _config["AI:Ollama:Model"]!);
 builder.Services.AddChatClient(chatClient);
 
