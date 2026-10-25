@@ -4,6 +4,8 @@ using DPA.SHOPPING.CORE.Infrastructure.Data;
 using DPA.SHOPPING.CORE.Infrastructure.Repositories;
 using DPA.SHOPPING.CORE.Infrastructure.Shared;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.AI;
+using OllamaSharp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,12 @@ builder.Services.AddSharedInfrastructure(_config);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+//IA IChatClient provider selected
+IChatClient chatClient = _config["AI:Provider"] == "Gemini" ? 
+        new Google.GenAI.Client(apiKey: _config["AI:ApiKey"]).AsIChatClient(_config["AI:Gemini:Model"]) :
+        new OllamaApiClient(new Uri(_config["AI:Ollama:Endpoint"]!), _config["AI:Ollama:Model"]!);
+builder.Services.AddChatClient(chatClient);
 
 var app = builder.Build();
 
